@@ -1,14 +1,14 @@
-var novels = [];
+let novels = [];
 
 // Verificar se existem dados salvos no armazenamento local e carregar
-var storedNovels = localStorage.getItem("novels");
+const storedNovels = localStorage.getItem("novels");
 if (storedNovels) {
     novels = JSON.parse(storedNovels);
     updateTable();
 }
 
 function toggleNovelForm() {
-    var novelForm = document.getElementById("novel-form");
+    const novelForm = document.getElementById("novel-form");
     if (novelForm.style.display === "none") {
         novelForm.style.display = "block";
     } else {
@@ -17,18 +17,18 @@ function toggleNovelForm() {
 }
 
 function addNovel() {
-    var novelName = document.getElementById("novel-name").value;
-    var chapter = document.getElementById("chapter").value;
-    var novelLink = document.getElementById("novel-link").value;
-    var note = document.getElementById("note").value;
-    var imageUrl = document.getElementById("image-url").value;
+    const novelName = document.getElementById("novel-name").value;
+    const chapter = document.getElementById("chapter").value;
+    const novelLink = document.getElementById("novel-link").value;
+    const note = document.getElementById("note").value;
+    const imageUrl = document.getElementById("image-url").value;
 
     if (novelName === '') {
         alert("Digite o nome da novel!");
         return;
     }
 
-    var novel = {
+    const novel = {
         name: novelName,
         chapter: chapter,
         link: novelLink,
@@ -36,7 +36,7 @@ function addNovel() {
         imageUrl: imageUrl
     };
 
-    var existingNovelIndex = novels.findIndex(function (n) {
+    const existingNovelIndex = novels.findIndex(function (n) {
         return n.name === novel.name;
     });
 
@@ -66,7 +66,7 @@ function deleteNovel(name) {
 }
 
 function editNovel(name) {
-    var novel = novels.find(function (item) {
+    const novel = novels.find(function (item) {
         return item.name === name;
     });
 
@@ -78,55 +78,55 @@ function editNovel(name) {
 }
 
 function updateTable() {
-    var tableBody = document.querySelector("#novel-table tbody");
+    const tableBody = document.querySelector("#novel-table tbody");
     tableBody.innerHTML = '';
 
     novels.forEach(function (novel, index) {
-        var row = document.createElement("tr");
+        const row = document.createElement("tr");
         row.setAttribute("data-index", index.toString()); // Adicionar o atributo data-index com o índice da novel
 
-        var imageCell = document.createElement("td");
-        var image = document.createElement("img");
+        const imageCell = document.createElement("td");
+        const image = document.createElement("img");
         image.src = novel.imageUrl;
         image.width = 75; // Alteração: definir a largura da imagem como 75 pixels
         image.height = 75; // Alteração: definir a altura da imagem como 75 pixels
         imageCell.appendChild(image);
         row.appendChild(imageCell);
 
-        var nameCell = document.createElement("td");
+        const nameCell = document.createElement("td");
         nameCell.textContent = novel.name;
         row.appendChild(nameCell);
 
-        var chapterCell = document.createElement("td");
+        const chapterCell = document.createElement("td");
         chapterCell.textContent = novel.chapter;
         row.appendChild(chapterCell);
 
-        var linkCell = document.createElement("td");
-        var link = document.createElement("a");
+        const linkCell = document.createElement("td");
+        const link = document.createElement("a");
         link.href = novel.link;
         link.target = "_blank";
         link.textContent = "Link";
         linkCell.appendChild(link);
         row.appendChild(linkCell);
 
-        var noteCell = document.createElement("td");
+        const noteCell = document.createElement("td");
         noteCell.textContent = novel.note;
         row.appendChild(noteCell);
 
-        var dragHandleCell = document.createElement("td");
+        const dragHandleCell = document.createElement("td");
         dragHandleCell.className = "drag-handle";
         dragHandleCell.textContent = "≡";
         row.appendChild(dragHandleCell);
 
-        var actionsCell = document.createElement("td");
-        var editButton = document.createElement("button");
+        const actionsCell = document.createElement("td");
+        const editButton = document.createElement("button");
         editButton.textContent = "Editar";
         editButton.onclick = function () {
             editNovel(novel.name);
         };
         actionsCell.appendChild(editButton);
 
-        var deleteButton = document.createElement("button");
+        const deleteButton = document.createElement("button");
         deleteButton.textContent = "Excluir";
         deleteButton.onclick = function () {
             deleteNovel(novel.name);
@@ -146,12 +146,12 @@ function saveToLocalStorage() {
 }
 
 function saveList() {
-    var data = JSON.stringify(novels);
-    var filename = "novels.json";
-    var blob = new Blob([data], {type: "text/plain"});
-    var url = window.URL.createObjectURL(blob);
+    const data = JSON.stringify(novels);
+    const filename = "novels.json";
+    const blob = new Blob([data], {type: "text/plain"});
+    const url = window.URL.createObjectURL(blob);
 
-    var link = document.createElement("a");
+    const link = document.createElement("a");
     link.href = url;
     link.download = filename;
 
@@ -163,18 +163,18 @@ function saveList() {
 }
 
 function loadList() {
-    var fileInput = document.getElementById("file-input");
+    const fileInput = document.getElementById("file-input");
     fileInput.onchange = function (e) {
-        var file = e.target.files[0];
-        var reader = new FileReader();
+        const file = e.target.files[0];
+        const reader = new FileReader();
 
         reader.onload = function (event) {
-            var contents = event.target.result;
+            const contents = event.target.result;
             if (typeof contents === 'string') {
                 novels = JSON.parse(contents);
             } else {
-                var decoder = new TextDecoder('utf-8');
-                var text = decoder.decode(contents);
+                const decoder = new TextDecoder('utf-8');
+                const text = decoder.decode(contents);
                 novels = JSON.parse(text);
             }
             updateTable();
