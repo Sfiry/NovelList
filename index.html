@@ -240,7 +240,7 @@
 
         novels.forEach(function (novel, index) {
             var row = document.createElement("tr");
-            row.setAttribute("data-index", index); // Adicionar o atributo data-index com o índice da novel
+            row.setAttribute("data-index", index.toString()); // Adicionar o atributo data-index com o índice da novel
 
             var imageCell = document.createElement("td");
             var image = document.createElement("img");
@@ -327,7 +327,13 @@
 
             reader.onload = function (event) {
                 var contents = event.target.result;
-                novels = JSON.parse(contents);
+                if (typeof contents === 'string') {
+                    novels = JSON.parse(contents);
+                } else {
+                    var decoder = new TextDecoder('utf-8');
+                    var text = decoder.decode(contents);
+                    novels = JSON.parse(text);
+                }
                 updateTable();
                 saveToLocalStorage(); // Salvar os dados carregados no armazenamento local
             };
