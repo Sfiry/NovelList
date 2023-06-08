@@ -88,8 +88,8 @@ function updateTable() {
         const imageCell = document.createElement("td");
         const image = document.createElement("img");
         image.src = novel.imageUrl;
-        image.width = 75; // Alteração: definir a largura da imagem como 75 pixels
-        image.height = 75; // Alteração: definir a altura da imagem como 75 pixels
+        image.width = 93.6; // Alteração: definir a largura da imagem como 93.6 pixels
+        image.height = 124.8; // Alteração: definir a altura da imagem como 124.8 pixels
         imageCell.appendChild(image);
         row.appendChild(imageCell);
 
