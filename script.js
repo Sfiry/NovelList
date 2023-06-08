@@ -90,8 +90,54 @@ function updateTable() {
         image.src = novel.imageUrl;
         image.width = 93.6; // Alteração: definir a largura da imagem como 93.6 pixels
         image.height = 124.8; // Alteração: definir a altura da imagem como 124.8 pixels
+        image.className = "zoom-image";
         imageCell.appendChild(image);
         row.appendChild(imageCell);
+
+        // Adicione o evento de clique na imagem
+        image.addEventListener('click', function() {
+            openModal(image.src);
+        });
+
+        function openModal(imageUrl) {
+            // Crie o elemento do modal
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+
+            // Crie o conteúdo do modal
+            const modalContent = document.createElement('div');
+            modalContent.className = 'modal-content';
+
+            // Crie a imagem ampliada
+            const enlargedImage = document.createElement('img');
+            enlargedImage.src = imageUrl;
+
+            // Crie o botão de fechar
+            const closeButton = document.createElement('span');
+            closeButton.innerHTML = '&times;';
+            closeButton.className = 'close-button';
+            closeButton.addEventListener('click', closeModal);
+
+            // Adicione a imagem e o botão de fechar ao conteúdo do modal
+            modalContent.appendChild(enlargedImage);
+            modalContent.appendChild(closeButton);
+
+            // Adicione o conteúdo do modal ao modal
+            modal.appendChild(modalContent);
+
+            // Adicione o modal ao corpo da página
+            document.body.appendChild(modal);
+
+            // Exiba o modal
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            const modal = document.querySelector('.modal');
+            if (modal) {
+                document.body.removeChild(modal);
+            }
+        }
 
         const nameCell = document.createElement("td");
         nameCell.textContent = novel.name;
